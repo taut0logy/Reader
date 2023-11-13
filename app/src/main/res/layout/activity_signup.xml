@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_blue"
+    tools:context=".SignupActivity">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:padding="10dp"
+        android:elevation="10dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/_icon"
+        android:background="@drawable/profile_circle"
+        android:contentDescription="@string/add_profile_picture"
+        app:layout_constraintBottom_toTopOf="@+id/tvaddprofilepic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tvaddprofilepic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/add_profile_picture"
+        android:textColor="@color/dark_indigo"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/etsignupname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/etsignupname"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:elevation="5dp"
+        android:hint="@string/name"
+        android:inputType="textEmailAddress"
+        android:autofillHints="name"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/etsignupmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvaddprofilepic" />
+
+    <EditText
+        android:id="@+id/etsignupmail"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_email_24"
+        android:elevation="5dp"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:autofillHints="emailAddress"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/etsignuppass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etsignupname" />
+
+    <EditText
+        android:id="@+id/etsignuppass"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_password_24"
+        android:elevation="5dp"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:autofillHints="password"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/etsignuppassconf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etsignupmail" />
+
+    <EditText
+        android:id="@+id/etsignuppassconf"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_password_24"
+        android:elevation="5dp"
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword"
+        android:autofillHints="password"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnsignup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etsignuppass" />
+
+    <Button
+        android:id="@+id/btnsignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/dark_indigo"
+        android:elevation="5dp"
+        android:text="@string/sign_up"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvdont"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etsignuppassconf" />
+
+    <TextView
+        android:id="@+id/tvdont"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/already_have_an_account_log_in"
+        android:textColor="@color/dark_indigo"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnsignup" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

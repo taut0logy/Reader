@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/profile_bg"
+    android:backgroundTint="@color/light_blue"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="20dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/book_thumbnail"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_margin="10dp"
+        android:src="@drawable/_icon_full"/>
+
+    <TextView android:id="@+id/nametag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="100dp"
+        android:text="Book Name: "
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_bold" />
+    <TextView android:id="@+id/book_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="190dp"
+        android:text="name"
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_regular" />
+    <TextView android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="100dp"
+        android:text="Author: "
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_bold" />
+    <TextView android:id="@+id/author_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="160dp"
+        android:text="author"
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_italic" />
+    <TextView android:id="@+id/pages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="100dp"
+        android:text="Pages: "
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_bold" />
+    <TextView android:id="@+id/page_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="155dp"
+        android:text="100"
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_italic" />
+    <TextView android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="100dp"
+        android:text="Progress: "
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_bold" />
+    <TextView android:id="@+id/progress_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="180dp"
+        android:text="0%"
+        android:textSize="15sp"
+        android:fontFamily="@font/aleo_bold" />
+
+
+</androidx.cardview.widget.CardView>

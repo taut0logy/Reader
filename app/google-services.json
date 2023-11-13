@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "642935073639",
+    "firebase_url": "https://jollypdf-23277-default-rtdb.firebaseio.com",
+    "project_id": "jollypdf-23277",
+    "storage_bucket": "jollypdf-23277.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:642935073639:android:9116d03248721ac7b79dc2",
+        "android_client_info": {
+          "package_name": "com.advancedprogramming.jollypdf"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuWyDMmxvBTXWQJmsMBVAQ8yP81Ij1SUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
