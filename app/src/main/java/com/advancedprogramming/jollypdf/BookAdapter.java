@@ -1,6 +1,7 @@
 package com.advancedprogramming.jollypdf;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,11 +38,17 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
         Book book = books.get(position);
+        Log.e("PDFErr","Rec: " + book.getPdf() + " " + book.getName()+ " " + book.getTotalpages());
         holder.name.setText(book.getName());
+        Log.e("PDFErr","Rec: name set");
         holder.author.setText(book.getAuthor());
-        holder.pages.setText(book.getTotalpages());
+        Log.e("PDFErr","Rec: author set");
+        String pages = String.valueOf(book.getTotalpages());
+        holder.pages.setText(pages);
         float progress = (book.getCurrpage()/book.getTotalpages())*100;
         holder.completed.setText(progress+"%");
+        Log.e("PDFErr","Rec: progress set");
+        //set the bitmap here
         Glide.with(context).load(book.getImage()).into(holder.image);
 
     }
