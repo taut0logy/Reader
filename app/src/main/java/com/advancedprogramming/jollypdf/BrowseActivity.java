@@ -1,12 +1,17 @@
 package com.advancedprogramming.jollypdf;
 
+import static android.app.ProgressDialog.show;
+
 import android.Manifest;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,19 +26,38 @@ import android.os.Environment;
 import android.os.ParcelFileDescriptor;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class BrowseActivity extends AppCompatActivity {
     static int READ_EXTERNAL_STORAGE_PERMISSION_CODE = 1;
-
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
+    private Toolbar toolbar;
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browse);
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view_browser);
+        toolbar = findViewById(R.id.browser_toolbar);
+        navigationView = findViewById(R.id.navDrawer);
+        drawer = findViewById(R.id.drawer_layout);
+
+
+        setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawer,toolbar,R.string.open,R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
 
         getPermissions();
         ArrayList<Book> pdfFiles = new ArrayList<>();
@@ -49,7 +73,58 @@ public class BrowseActivity extends AppCompatActivity {
             recyclerView.setAdapter(pdfAdapter);
         }
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+
+        navigationView.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+                if(id==R.id.profile) {
+                    Intent i=new Intent(BrowseActivity.this,ProfileActivity.class);
+                    startActivity(i);
+                } else if(id==R.id.logout) {
+                    FirebaseAuth.getInstance().signOut();
+                    Intent i=new Intent(BrowseActivity.this,LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                } else if(id==R.id.share) {
+                    Intent i=new Intent(Intent.ACTION_SEND);
+                    i.setType("text/plain");
+                    String shareBody="Your body here";
+                    String shareSub="Your Subject here";
+                    i.putExtra(Intent.EXTRA_SUBJECT,shareSub);
+                    i.putExtra(Intent.EXTRA_TEXT,shareBody);
+                    startActivity(Intent.createChooser(i,"Share using"));
+                } else if(id==R.id.about) {
+                    Toast.makeText(BrowseActivity.this, "Exit", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else if(id==R.id.feedback) {
+                    Intent i=new Intent(BrowseActivity.this,FeedbackActivity.class);
+                    startActivity(i);
+                }
+            return true;
+        });
+
+        toolbar.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.search) {
+                Toast.makeText(BrowseActivity.this, "Search", Toast.LENGTH_SHORT).show();
+            } else if (id == R.id.refresh) {
+                getPdfFiles(directory, pdfFiles);
+            } else if (id == R.id.exit) {
+                Toast.makeText(BrowseActivity.this, "Exit", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+            return true;
+        });
+
+        //handle selecting item from recycler view
+
     }
+
+//    public void onItemClick(Book book) {
+//        Intent intent = new Intent(BrowseActivity.this, ViewActivity.class);
+//        intent.putExtra("book", book);
+//        startActivity(intent);
+//    }
 
     private void getPdfFiles(File directory, ArrayList<Book> pdfFiles) {
         File[] files = directory.listFiles();
@@ -158,6 +233,23 @@ public class BrowseActivity extends AppCompatActivity {
                 }
             }
     );
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater=getMenuInflater();
+        menuInflater.inflate(R.menu.browser_toolbar_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(navigationView)) {
+            drawer.closeDrawer(navigationView);
+        }
+        else
+            super.onBackPressed();
+    }
+
+
 
 
 

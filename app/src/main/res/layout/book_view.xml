@@ -5,7 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/profile_bg"
     android:backgroundTint="@color/light_blue"
-    android:layout_margin="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     app:cardCornerRadius="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -28,7 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginStart="190dp"
+        android:layout_marginEnd="10dp"
         android:text="name"
+        android:lines="1"
+        android:ellipsize="end"
         android:textSize="15sp"
         android:fontFamily="@font/aleo_regular" />
     <TextView android:id="@+id/author"
@@ -45,6 +51,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="160dp"
         android:text="author"
+        android:lines="1"
+        android:ellipsize="end"
         android:textSize="15sp"
         android:fontFamily="@font/aleo_italic" />
     <TextView android:id="@+id/pages"
@@ -52,6 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginStart="100dp"
+        android:layout_marginEnd="10dp"
         android:text="Pages: "
         android:textSize="15sp"
         android:fontFamily="@font/aleo_bold" />

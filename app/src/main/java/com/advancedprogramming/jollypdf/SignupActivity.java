@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader;*/
+import android.graphics.drawable.BitmapDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
@@ -80,10 +82,15 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(this, "User created successfully.", Toast.LENGTH_SHORT).show();
                     if(mAuth.getCurrentUser()!=null) {
                         String uid=mAuth.getCurrentUser().getUid();
-
                         StorageReference profilePicRef=storage.getReference().child("profilepics").child(uid+".jpg");
-                        Uri file=Uri.fromFile(new File(mCurrentPhotoPath));
-                        profilePicRef.putFile(file).addOnCompleteListener(task1 -> {
+                        //get image from imageview
+                        Bitmap bitmap=((BitmapDrawable)profileImageView.getDrawable()).getBitmap();
+                        //compress image
+                        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos);
+                        byte[] data=baos.toByteArray();
+                        //upload image
+                        profilePicRef.putBytes(data).addOnCompleteListener(task1 -> {
                             if(task1.isSuccessful()) {
                                 Toast.makeText(this, "Profile pic uploaded successfully.", Toast.LENGTH_SHORT).show();
                             } else {
@@ -95,7 +102,7 @@ public class SignupActivity extends AppCompatActivity {
                         database.getReference().child("users").child(uid).setValue(user).addOnCompleteListener(task1 -> {
                             if(task1.isSuccessful()) {
                                 Toast.makeText(this, "User data saved successfully.", Toast.LENGTH_SHORT).show();
-                                Intent i=new Intent(SignupActivity.this,MainActivity.class);
+                                Intent i=new Intent(SignupActivity.this,BrowseActivity.class);
                                 i.putExtra("Extra_user",user);
                                 Intent i2=new Intent(SignupActivity.this,ProfileActivity.class);
                                 i2.putExtra("Extra_user",user);

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText etEmail=findViewById(R.id.etloginname);
         EditText etPassword=findViewById(R.id.etloginpass);
         Button btnLogin=findViewById(R.id.btnsignup);
+        TextView dont=findViewById(R.id.tvdont);
         FirebaseAuth mAuth=FirebaseAuth.getInstance();
         FirebaseDatabase database=FirebaseDatabase.getInstance();
         btnLogin.setOnClickListener(v-> {
@@ -101,6 +103,11 @@ public class LoginActivity extends AppCompatActivity {
             });
         });
 
+        dont.setOnClickListener(v-> {
+            Intent i=new Intent(LoginActivity.this,SignupActivity.class);
+            startActivity(i);
+            finish();
+        });
     }
 
 }

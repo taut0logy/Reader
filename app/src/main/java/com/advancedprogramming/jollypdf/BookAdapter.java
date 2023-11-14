@@ -1,6 +1,7 @@
 package com.advancedprogramming.jollypdf;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +21,12 @@ import android.graphics.pdf.PdfDocument;
 import android.graphics.pdf.PdfRenderer;
 import android.os.ParcelFileDescriptor;
 
+
+
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     private List<Book> books;
     private Context context;
+    //private onItemClickListener onItemClickListener;
     public BookAdapter(List<Book> books, Context context){
         this.books = books;
         this.context = context;
@@ -33,6 +37,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.book_view, parent, false);
         return new BookViewHolder(view);
     }
+
 
     @NonNull
     @Override
@@ -51,6 +56,20 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         //set the bitmap here
         Glide.with(context).load(book.getImage()).into(holder.image);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Book book = books.get(position);
+                String pdf = book.getPdf();
+                Intent intent = new Intent(context, ViewActivity.class);
+                intent.putExtra("Extra_book", pdf);
+                intent.putExtra("Extra_bookName", book.getName());
+                intent.putExtra("Extra_authorName", book.getAuthor());
+                intent.putExtra("Extra_totalPages", book.getTotalpages());
+                intent.putExtra("Extra_currPage", book.getCurrpage());
+                context.startActivity(intent);
+            }
+            });
     }
 
     @Override

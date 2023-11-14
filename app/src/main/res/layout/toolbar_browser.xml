@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/browser_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/toolbar_bg"
+    android:backgroundTint="@color/dark_blue"
+    app:title="Welcome!"
+    app:subtitle="Browse Books"
+    app:menu="@menu/browser_toolbar_menu">
+
+
+
+</androidx.appcompat.widget.Toolbar>
