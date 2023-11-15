@@ -63,7 +63,8 @@ public class BrowseActivity extends AppCompatActivity {
         getPermissions();
 
         ArrayList<Book> pdfFiles = new ArrayList<>();
-        File directory = new File(Environment.getExternalStorageDirectory().toString());
+        File directory = new File(Environment.getExternalStorageDirectory().toString()+"/JollyRead");
+        Log.e("PDFErr", "onCreate: "+directory.getAbsolutePath() );
         getPdfFiles(directory,pdfFiles);
         String name=getIntent().getStringExtra("Extra_username");
         Log.e("PDFErr", "onCreate: "+name );

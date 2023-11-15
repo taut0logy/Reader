@@ -21,6 +21,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,6 +53,14 @@ public class EditActivity extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     if (!etEditName.getText().toString().isEmpty()) {
                         updates.put("name", etEditName.getText().toString());
+                        UserJSON userJSON=new UserJSON();
+                        userJSON.setUserID(etEditName.getText().toString());
+                        String location= "/storage/emulated/0/JollyRead/UserData/curr.json";
+                        try {
+                            JSONHandler.writeJSON(location,userJSON);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                     if (!etEditMail.getText().toString().isEmpty()) {
                         FirebaseAuth.getInstance().getCurrentUser().updateEmail(etEditMail.getText().toString()).addOnCompleteListener(task1 -> {
