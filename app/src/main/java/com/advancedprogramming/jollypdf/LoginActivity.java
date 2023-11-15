@@ -45,14 +45,27 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(this, "User logged in successfully.", Toast.LENGTH_SHORT).show();
                     if(mAuth.getCurrentUser()!=null) {
                         String uid=mAuth.getCurrentUser().getUid();
+
+
                         database.getReference().child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 User user=snapshot.getValue(User.class);
                                 assert user != null;
-                                Intent i=new Intent(LoginActivity.this,MainActivity.class);
+                                Intent i=new Intent(LoginActivity.this,BrowseActivity.class);
                                 new Intent(LoginActivity.this,ProfileActivity.class).putExtra("Extra_user",user);
+                                Log.e("PDFErr", "onDataChange: "+user.getName() );
+                                new Intent(LoginActivity.this,BrowseActivity.class).putExtra("Extra_username",user.getName());
                                 i.putExtra("Extra_user",user);
+                                //Log.e("PDFErr", "onDataChange: "+user.getName() );
+                                UserJSON userJSON=new UserJSON();
+                                userJSON.setUserID(user.getName());
+                                try {
+                                    JSONHandler.writeJSON("/storage/emulated/0/JollyRead/UserData/curr.json",userJSON);
+                                } catch (Exception e) {
+                                    Log.e("PDFError",e.getMessage());
+                                    e.printStackTrace();
+                                }
                                 startActivity(i);
                                 finish();
                             }

@@ -22,17 +22,20 @@
         android:theme="@style/Theme.JollyPDF"
         tools:targetApi="31">
         <activity
-            android:name=".FeedbackActivity"
-            android:exported="false" />
+            android:name=".EditActivity"
+            android:exported="false"
+            android:parentActivityName=".ProfileActivity"/>
         <activity
             android:name=".ViewActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".BrowseActivity"/>
         <activity
             android:name=".BrowseActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".BrowseActivity"/>
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
@@ -49,8 +52,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            android:name=".InfoActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

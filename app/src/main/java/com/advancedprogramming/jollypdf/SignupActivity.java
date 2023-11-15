@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -99,12 +100,20 @@ public class SignupActivity extends AppCompatActivity {
                         });
                         String url=profilePicRef.getDownloadUrl().toString();
                         User user=new User(uid,name,email,url);
+                        UserJSON userJSON=new UserJSON();
+                        userJSON.setUserID(name);
+                        try {
+                            JSONHandler.writeJSON("/storage/emulated/0/JollyRead/UserData/curr.json",userJSON);
+                        } catch (Exception e) {
+                            Log.e("PDFError",e.getMessage());
+                            e.printStackTrace();
+                        }
                         database.getReference().child("users").child(uid).setValue(user).addOnCompleteListener(task1 -> {
                             if(task1.isSuccessful()) {
                                 Toast.makeText(this, "User data saved successfully.", Toast.LENGTH_SHORT).show();
                                 Intent i=new Intent(SignupActivity.this,BrowseActivity.class);
-                                i.putExtra("Extra_user",user);
                                 Intent i2=new Intent(SignupActivity.this,ProfileActivity.class);
+                                new Intent(SignupActivity.this,BrowseActivity.class).putExtra("Extra_usernamw",name);
                                 i2.putExtra("Extra_user",user);
                                 startActivity(i);
                                 finish();

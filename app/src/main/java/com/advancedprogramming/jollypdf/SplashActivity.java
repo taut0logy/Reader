@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -30,6 +33,19 @@ public class SplashActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //create directories if not exist
+                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/JollyPDF");
+                if(!file.exists()) {
+                    file.mkdirs();
+                }
+                File file2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/JollyPDF/BookData");
+                if(!file2.exists()) {
+                    file2.mkdirs();
+                }
+                File file3 = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/JollyPDF/BookData/UserData");
+                if(!file3.exists()) {
+                    file3.mkdirs();
+                }
                 FirebaseUser user = mAuth.getCurrentUser();
                 if(user!=null){
                     String uid=mAuth.getCurrentUser().getUid();

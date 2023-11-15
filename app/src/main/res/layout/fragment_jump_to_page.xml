@@ -12,7 +12,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Jump to page:"
+        android:text="Page:"
         android:textSize="18sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/jumpbtn"
@@ -28,13 +28,13 @@
         android:layout_height="wrap_content"
         android:hint="page"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintEnd_toStartOf="@+id/totalPage"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/totalPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="/100"

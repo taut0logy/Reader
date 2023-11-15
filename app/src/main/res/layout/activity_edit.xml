@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imageViewedit"
+        android:layout_margin="10dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/profile_circle"
+        android:contentDescription="@string/add_profile_picture"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:src="@drawable/_icon"
+        app:layout_constraintBottom_toTopOf="@+id/tvaddprofilepic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tvaddprofilepic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change Profile Picture"
+        android:textColor="@color/dark_indigo"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/eteditname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewedit" />
+
+    <EditText
+        android:id="@+id/eteditname"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="name"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_person_24"
+        android:elevation="5dp"
+        android:hint="Change Name"
+        android:inputType="textEmailAddress"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/eteditmail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvaddprofilepic" />
+
+    <EditText
+        android:id="@+id/eteditmail"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="email"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_email_24"
+        android:elevation="5dp"
+        android:hint="Change Email"
+        android:inputType="textEmailAddress"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/eteditpass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eteditname" />
+
+    <EditText
+        android:id="@+id/eteditpass"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="password"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_password_24"
+        android:elevation="5dp"
+        android:hint="Change Password"
+        android:inputType="textPassword"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/eteditconfirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eteditmail" />
+
+    <EditText
+        android:id="@+id/eteditconfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="password"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_password_24"
+        android:elevation="5dp"
+        android:hint="Confirm New Password"
+        android:inputType="textPassword"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/oldpass"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eteditpass" />
+
+    <EditText
+        android:id="@+id/oldpass"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:autofillHints="password"
+        android:background="@drawable/tablet_shape"
+        android:drawableStart="@drawable/baseline_password_24"
+        android:elevation="5dp"
+        android:hint="Enter Old Password"
+        android:inputType="textPassword"
+        android:minEms="15"
+        android:padding="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnedit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eteditconfirm" />
+
+    <Button
+        android:id="@+id/btnedit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Edit Profile"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/oldpass" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

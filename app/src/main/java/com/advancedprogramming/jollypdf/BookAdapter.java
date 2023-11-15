@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Bitmap;
@@ -26,6 +27,8 @@ import android.os.ParcelFileDescriptor;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
     private List<Book> books;
     private Context context;
+
+
     //private onItemClickListener onItemClickListener;
     public BookAdapter(List<Book> books, Context context){
         this.books = books;
@@ -43,16 +46,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     @Override
     public void onBindViewHolder(BookViewHolder holder, int position) {
         Book book = books.get(position);
-        Log.e("PDFErr","Rec: " + book.getPdf() + " " + book.getName()+ " " + book.getTotalpages());
+        //Log.e("PDFErr","Rec: " + book.getPdf() + " " + book.getName()+ " " + book.getTotalpages());
         holder.name.setText(book.getName());
-        Log.e("PDFErr","Rec: name set");
         holder.author.setText(book.getAuthor());
-        Log.e("PDFErr","Rec: author set");
         String pages = String.valueOf(book.getTotalpages());
         holder.pages.setText(pages);
         float progress = (book.getCurrpage()/book.getTotalpages())*100;
         holder.completed.setText(progress+"%");
-        Log.e("PDFErr","Rec: progress set");
         //set the bitmap here
         Glide.with(context).load(book.getImage()).into(holder.image);
 
@@ -66,10 +66,39 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                 intent.putExtra("Extra_bookName", book.getName());
                 intent.putExtra("Extra_authorName", book.getAuthor());
                 intent.putExtra("Extra_totalPages", book.getTotalpages());
-                intent.putExtra("Extra_currPage", book.getCurrpage());
+                String url="/storage/emulated/0/JollyRead/BookData/"+book.getName()+".json";
+                BookJSON bookJSON=new BookJSON();
+                try{
+                    JSONHandler.readJSON(url,bookJSON);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("PDFErr","Rec: "+e.getMessage());
+                }
+                intent.putExtra("Extra_currPage",bookJSON.getCurrePage());
+                UserJSON userJSON=new UserJSON();
+                try{
+                    JSONHandler.readJSON("/storage/emulated/0/JollyRead/UserData/curr.json",userJSON);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("PDFErr","Rec: "+e.getMessage());
+                }
+                ArrayList<String> readingHistory=userJSON.getReadingHistory();
+                if(readingHistory.contains(book.getName())){
+                    Log.e("PDFErr","Rec: "+book.getName());
+                    readingHistory.remove(book.getName());
+                }
+                readingHistory.add(book.getName());
+                try{
+                    JSONHandler.writeJSON("/storage/emulated/0/JollyRead/UserData/curr.json",userJSON);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Log.e("PDFErr","Rec: "+e.getMessage());
+                }
+
+                //Log.e("PDFErr","Rec: "+bookJSON.getCurrePage());
                 context.startActivity(intent);
             }
-            });
+        });
     }
 
     @Override

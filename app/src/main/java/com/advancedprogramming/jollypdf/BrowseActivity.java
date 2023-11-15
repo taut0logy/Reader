@@ -34,6 +34,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class BrowseActivity extends AppCompatActivity {
@@ -60,12 +61,15 @@ public class BrowseActivity extends AppCompatActivity {
 
 
         getPermissions();
+
         ArrayList<Book> pdfFiles = new ArrayList<>();
         File directory = new File(Environment.getExternalStorageDirectory().toString());
         getPdfFiles(directory,pdfFiles);
-        for(Book book: pdfFiles) {
-            Log.e("PDFErr", book.getPdf() + " " + book.getName()+ " " + book.getTotalpages());
-        }
+        String name=getIntent().getStringExtra("Extra_username");
+        Log.e("PDFErr", "onCreate: "+name );
+//        for(Book book: pdfFiles) {
+//            Log.e("PDFErr", book.getPdf() + " " + book.getName()+ " " + book.getTotalpages()+ " " + book.getCurrpage());
+//        }
         if (pdfFiles.isEmpty()) {
             Toast.makeText(this, "No PDF file found", Toast.LENGTH_SHORT).show();
         } else {
@@ -82,6 +86,8 @@ public class BrowseActivity extends AppCompatActivity {
                     startActivity(i);
                 } else if(id==R.id.logout) {
                     FirebaseAuth.getInstance().signOut();
+                    File file=new File("/storage/emulated/0/JollyRead/UserData/"+name+".json");
+                    file.delete();
                     Intent i=new Intent(BrowseActivity.this,LoginActivity.class);
                     startActivity(i);
                     finish();
@@ -94,11 +100,22 @@ public class BrowseActivity extends AppCompatActivity {
                     i.putExtra(Intent.EXTRA_TEXT,shareBody);
                     startActivity(Intent.createChooser(i,"Share using"));
                 } else if(id==R.id.about) {
-                    Toast.makeText(BrowseActivity.this, "Exit", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BrowseActivity.this, "About me", Toast.LENGTH_SHORT).show();
+                    //Launch LinkedIn
+                    Intent i=new Intent(Intent.ACTION_VIEW,Uri.parse("https://www.linkedin.com/in/raufun-ahsan-7b1b3a1b2/"));
+                    startActivity(i);
                     finish();
                 } else if(id==R.id.feedback) {
-                    Intent i=new Intent(BrowseActivity.this,FeedbackActivity.class);
-                    startActivity(i);
+                    //open gmail
+                    Intent i=new Intent(Intent.ACTION_SEND);
+                    i.setData(Uri.parse("mailto:"));
+                    String[] to={"raufun.ahsan@gmail.com" };
+                    i.putExtra(Intent.EXTRA_EMAIL,to);
+                    i.putExtra(Intent.EXTRA_SUBJECT,"Feedback");
+                    i.putExtra(Intent.EXTRA_TEXT,"");
+                    i.setType("message/rfc822");
+                    Intent chooser=Intent.createChooser(i,"Launch Email");
+                    startActivity(chooser);
                 }
             return true;
         });
@@ -165,15 +182,58 @@ public class BrowseActivity extends AppCompatActivity {
             Bitmap thumbnail = Bitmap.createBitmap(page.getWidth(), page.getHeight(), Bitmap.Config.ARGB_8888);
             page.render(thumbnail, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
             book.setImage(thumbnail);
+            String name=book.getName().substring(0,book.getName().length()-4);
+            File file=new File("/storage/emulated/0/JollyRead/BookData/"+name+".jpeg");
+            if(!file.exists()){
+                try(FileOutputStream out=new FileOutputStream(file)){
+                    thumbnail.compress(Bitmap.CompressFormat.JPEG,100,out);
+            } catch (Exception e) {
+                Log.e("PDFErr","ExtractWrite: "+ e.getMessage());
+            }
+            }
             // Set total pages
             book.setTotalpages(pdfRenderer.getPageCount());
             // Close the page
             page.close();
             // Close the PdfRenderer
             pdfRenderer.close();
+            BookJSON bookJSON = new BookJSON();
+            String url="/storage/emulated/0/JollyRead/BookData/"+book.getName()+".json";
+            String err="JSONErr";
+            try {
+                JSONHandler.readJSON(url,bookJSON);
+            } catch (Exception e) {
+                Log.e("PDFErr", "ExtractRead: "+e.getMessage());
+                err=e.getMessage();
+            }
+            //Log.e("PDFErr", "ExtractRead: "+err);
+            if(err.contains("No such file or directory")){
+                //File file=new File(url);
+                //file.createNewFile();
+                book.setCurrpage(0);
+                book.setAuthor("Unknown");
+                book.setGenre("Unknown");
+                book.setDescription("Unknown");
+                bookJSON.setName(book.getName());
+                bookJSON.setAuthor(book.getAuthor());
+                bookJSON.setGenre(book.getGenre());
+                bookJSON.setDescription(book.getDescription());
+                bookJSON.setPdfName(book.getName());
+                bookJSON.setCurrePage(book.getCurrpage());
+                try {
+                    JSONHandler.writeJSON(url,bookJSON);
+                } catch (Exception e) {
+                    Log.e("PDFErr","ExtractWrite: "+ e.getMessage());
+                }
+            } else {
+                book.setCurrpage(bookJSON.getCurrePage());
+                book.setAuthor(bookJSON.getAuthor());
+                book.setGenre(bookJSON.getGenre());
+                book.setDescription(bookJSON.getDescription());
+            }
 
         } catch (Exception e) {
-            Log.e("PDFErr", e.getMessage());
+            Log.e("PDFErr","ExtractOut: "+ e.getMessage());
             e.printStackTrace();
         }
     }
@@ -197,7 +257,6 @@ public class BrowseActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_PERMISSION_CODE);
             }
         }
-
     }
     private void requestStoragePermission() {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -248,26 +307,6 @@ public class BrowseActivity extends AppCompatActivity {
         else
             super.onBackPressed();
     }
-
-
-
-
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode,permissions,grantResults);
-//        if(requestCode == 1) {
-//            if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                // Permission granted
-//                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-//            } else {
-//                // Permission denied
-//                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-//            }
-//        }
-//    }
-
-
 
 
 
